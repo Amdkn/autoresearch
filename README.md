@@ -90,3 +90,16 @@ I think these would be the reasonable hyperparameters to play with. Ask your fav
 ## License
 
 MIT
+
+---
+
+## Statut du fork A'Space (D-N047, D12)
+
+**Ce fork est une référence seule.** L'amont `karpathy/autoresearch` est **sans licence**
+(`license: null`, aucun fichier LICENSE) : aucune copie, aucun vendoring, aucune
+importation de ses fichiers dans un artefact A'Space. La transposition
+(`program.md` + `runner.py`) est réécrite depuis la spécification du design
+D-N047 (clean-room) ; le 13e contrôle par comparaison de contenu à la validation.
+
+**Repli nommé :** si l'auteur s'oppose, le fork est supprimé ; si une licence
+apparaît, le design est amendé pour autoriser la réutilisation sous cette licence.
