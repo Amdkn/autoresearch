@@ -17,6 +17,7 @@ Usage :
 
 import argparse
 import configparser
+import glob
 import json
 import os
 import subprocess
@@ -30,7 +31,12 @@ JOURNAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "experiments.
 # d'adaptation n'existe ET qu'il n'est pas déjà en état > 0. Les pointeurs
 # amont non souverains ne comptent pas ; un doublon compte une fois.
 SOVEREIGN_HOSTS = ("github.com/Amdkn/", "huggingface.co/Amdkn7/")
-ADAPTATION_GLOB = ("01_Forkable", "FKB00_Runtime", "00_A0_Core")
+# Amendement D13 (jugement 13e, journal 407, D-N048 V2) : le runner scanne
+# TOUS les domiciles 01_Forkable/<FKB>/00_A0_Core/ (§D7), pas FKB00 seul.
+# Avant : ADAPTATION_GLOB = ("01_Forkable", "FKB00_Runtime", "00_A0_Core")
+# — les fiches FKB04/FKB03 n'étaient pas comptées (C surévalué de 2 :
+# 92 mesuré, vrai C 90). Le registre reste la source D10.
+ADAPTATION_GLOB = ("01_Forkable", "*", "00_A0_Core")
 
 
 def _deadline(started_at):
@@ -58,14 +64,19 @@ def parse_gitmodules(v5_path):
 
 
 def adaptation_sheets(v5_path):
-    """Noms de modules disposant d'une fiche d'adaptation (état > 0)."""
-    base = os.path.join(v5_path, *ADAPTATION_GLOB)
+    """Noms de modules disposant d'une fiche d'adaptation (état > 0).
+
+    Scan de tous les domiciles 01_Forkable/<FKB>/00_A0_Core/ (§D7,
+    amendement D13, journal 407) — un module adapté dans n'importe
+    quel FKB sort de C.
+    """
     sheets = set()
-    if not os.path.isdir(base):
-        return sheets
-    for name in os.listdir(base):
-        if name.endswith("-ADAPTATION.md"):
-            sheets.add(name[:-len("-ADAPTATION.md")].lower())
+    for base in glob.glob(os.path.join(v5_path, *ADAPTATION_GLOB)):
+        if not os.path.isdir(base):
+            continue
+        for name in os.listdir(base):
+            if name.endswith("-ADAPTATION.md"):
+                sheets.add(name[:-len("-ADAPTATION.md")].lower())
     return sheets
 
 
