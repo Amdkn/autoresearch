@@ -34,8 +34,9 @@ SOVEREIGN_HOSTS = ("github.com/Amdkn/", "huggingface.co/Amdkn7/")
 # Amendement D13 (jugement 13e, journal 407, D-N048 V2) : le runner scanne
 # TOUS les domiciles 01_Forkable/<FKB>/00_A0_Core/ (§D7), pas FKB00 seul.
 # Avant : ADAPTATION_GLOB = ("01_Forkable", "FKB00_Runtime", "00_A0_Core")
-# — les fiches FKB04/FKB03 n'étaient pas comptées (C surévalué de 2 :
-# 92 mesuré, vrai C 90). Le registre reste la source D10.
+# — les fiches FKB04/FKB03 n'étaient pas comptées (C surévalué :
+# 92 mesuré sur la branche V2, vrai C 89 = 92 − 3). Le registre reste
+# la source D10.
 ADAPTATION_GLOB = ("01_Forkable", "*", "00_A0_Core")
 
 
